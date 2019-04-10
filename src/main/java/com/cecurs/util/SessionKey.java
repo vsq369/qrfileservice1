@@ -1,4 +1,4 @@
-package com.cecurs.qrfileservice.util;
+package com.cecurs.util;
 
 
 

@@ -1,4 +1,4 @@
-package com.cecurs.qrfileservice.common;
+package com.cecurs.common;
 /*
  * Copyright (C) 2010 The MobileSecurePay Project
  * All right reserved.

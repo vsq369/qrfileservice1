@@ -1,4 +1,4 @@
-package com.cecurs.qrfileservice.ctrl;
+package com.cecurs.ctrl;
 
 /**
  * @author: guowei

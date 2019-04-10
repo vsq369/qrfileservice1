@@ -1,7 +1,7 @@
-package com.cecurs.qrfileservice.util;
+package com.cecurs.util;
 
 
-import com.cecurs.qrfileservice.common.StringCls;
+import com.cecurs.common.StringCls;
 
 import java.io.File;
 import java.io.FileInputStream;

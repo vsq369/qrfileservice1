@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cecurs.qrfileservice.dao.FileInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.cecurs.qrfileservice.entity.FileInfo" >
+<mapper namespace="com.cecurs.dao.FileInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.cecurs.entity.FileInfo" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="file_name" property="fileName" jdbcType="VARCHAR" />
     <result column="file_size" property="fileSize" jdbcType="INTEGER" />
@@ -77,7 +77,7 @@
     id, file_name, file_size, hash, flag, status, path, is_analysis, analysis_time, inn_code, 
     inn_name, create_time
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cecurs.qrfileservice.entity.FileInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cecurs.entity.FileInfoExample" >
     select
     <if test="distinct" >
       distinct
@@ -101,13 +101,13 @@
     delete from t_fileinfo
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.cecurs.qrfileservice.entity.FileInfoExample" >
+  <delete id="deleteByExample" parameterType="com.cecurs.entity.FileInfoExample" >
     delete from t_fileinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+  <insert id="insert" parameterType="com.cecurs.entity.FileInfo" >
     insert into t_fileinfo (id, file_name, file_size, 
       hash, flag, status, path, 
       is_analysis, analysis_time, inn_code, 
@@ -117,7 +117,7 @@
       #{isAnalysis,jdbcType=BIT}, #{analysisTime,jdbcType=TIMESTAMP}, #{innCode,jdbcType=VARCHAR}, 
       #{innName,jdbcType=VARCHAR}, #{modifier,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+  <insert id="insertSelective" parameterType="com.cecurs.entity.FileInfo" >
     insert into t_fileinfo
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -180,7 +180,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.cecurs.qrfileservice.entity.FileInfoExample" resultType="java.lang.Integer" >
+  <select id="countByExample" parameterType="com.cecurs.entity.FileInfoExample" resultType="java.lang.Integer" >
     select count(*) from t_fileinfo
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
@@ -248,7 +248,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.cecurs.entity.FileInfo" >
     update t_fileinfo
     <set >
       <if test="fileName != null" >
@@ -287,7 +287,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+  <update id="updateByPrimaryKey" parameterType="com.cecurs.entity.FileInfo" >
     update t_fileinfo
     set file_name = #{fileName,jdbcType=VARCHAR},
       file_size = #{fileSize,jdbcType=INTEGER},

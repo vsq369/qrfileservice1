@@ -1,7 +1,7 @@
-package com.cecurs.qrfileservice.common;
+package com.cecurs.common;
 
 
-import com.cecurs.qrfileservice.util.SessionKey;
+import com.cecurs.util.SessionKey;
 
 public class MacCls {
 

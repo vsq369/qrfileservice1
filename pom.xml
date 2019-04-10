@@ -29,46 +29,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>repo.org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.0.5</version>
-        </dependency>
-		<dependency>
-			<groupId>repo.org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.0.5</version>
-		</dependency>
-        <dependency>
-            <groupId>repo.org.mybatis</groupId>
-            <artifactId>mybatis</artifactId>
-            <version>3.0.5</version>
-        </dependency>
-		<dependency>
-			<groupId>repo.org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.0.5</version>
-		</dependency>
-		<dependency>
-			<groupId>repo.org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.0.5</version>
-		</dependency>
-		<dependency>
-			<groupId>repo.org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.0.5</version>
-		</dependency>
-		<dependency>
-			<groupId>repo.org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.0.5</version>
-		</dependency>
-		<dependency>
-			<groupId>repo.org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.0.5</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>

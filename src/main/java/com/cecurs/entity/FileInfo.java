@@ -1,4 +1,4 @@
-package com.cecurs.qrfileservice.entity;
+package com.cecurs.entity;
 
 import java.util.Date;
 

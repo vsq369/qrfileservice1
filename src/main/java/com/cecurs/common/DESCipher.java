@@ -1,4 +1,4 @@
-package com.cecurs.qrfileservice.common;
+package com.cecurs.common;
 import java.security.SecureRandom;
 
 import javax.crypto.Cipher;

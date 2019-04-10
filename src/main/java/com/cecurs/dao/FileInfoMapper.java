@@ -1,7 +1,7 @@
-package com.cecurs.qrfileservice.dao;
+package com.cecurs.dao;
 
-import com.cecurs.qrfileservice.entity.FileInfo;
-import com.cecurs.qrfileservice.entity.FileInfoExample;
+import com.cecurs.entity.FileInfo;
+import com.cecurs.entity.FileInfoExample;
 
 import java.util.List;
 

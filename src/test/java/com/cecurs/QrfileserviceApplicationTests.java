@@ -1,4 +1,4 @@
-package com.cecurs.qrfileservice;
+package com.cecurs;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
