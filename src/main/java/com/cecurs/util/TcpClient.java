@@ -53,6 +53,11 @@ public class TcpClient {
         }
     }
 
+
+    public boolean sendText(String txt){
+        return sendMsg(txt.getBytes());
+    }
+
     public byte[] receiveMsg(){
         try{
             DataInputStream in = new DataInputStream(m_socket.getInputStream());

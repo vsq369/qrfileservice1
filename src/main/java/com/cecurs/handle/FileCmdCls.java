@@ -103,7 +103,7 @@ public class FileCmdCls {
      * @param instCode 请求机构代码
      * @return
      */
-    public ReturnValue cmd4002Data321(String instName, String instCode){
+    public ReturnValue cmd4002Data(String instName, String instCode){
         Map<String,CmdEntity> map = new HashMap<>();
         StringBuffer sb = new StringBuffer();
         sb.append(MessageType.CMD4002.getVersion());
@@ -304,9 +304,11 @@ public class FileCmdCls {
             CmdEntity cmdEntity = new CmdEntity();
             cmdEntity.setFiles(data.substring(len-22, len-18));
             returnValue.setCmd(cmdEntity);
+            returnValue.setResult(CmdResp.SUCCESS.getCode());
+            returnValue.setDesc(CmdResp.SUCCESS.getDesc());
         }else{
-            returnValue.setResult(CmdResp.DATANULL.getCode());
-            returnValue.setDesc(CmdResp.DATANULL.getDesc());
+            returnValue.setResult(retcode);
+            returnValue.setDesc("读取文件个数为0");
         }
         return returnValue;
     }
@@ -383,4 +385,14 @@ public class FileCmdCls {
       }
       return returnValue;
   }
+
+
+
+    public  String MAC(String Key,String data){
+        if("".equals(Key)){
+            return "0000000000000000";
+        }
+        return "0000000000000000";
+    }
+
 }
