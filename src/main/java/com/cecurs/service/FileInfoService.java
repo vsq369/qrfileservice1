@@ -1,15 +1,11 @@
 package com.cecurs.service;
 
-/**
- *
- */
+import com.cecurs.entity.FileInfo;
+
 public interface FileInfoService {
 
+    boolean addFileInfo(FileInfo info);
 
-
-    public boolean addFileInfo();
-
-    public boolean updateFileInfo();
-
+    boolean updateFileInfo(FileInfo info);
 
 }

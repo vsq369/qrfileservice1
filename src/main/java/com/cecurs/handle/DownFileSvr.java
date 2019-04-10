@@ -1,7 +1,6 @@
 package com.cecurs.handle;
 
-import com.cecurs.entity.CmdEntity;
-import com.cecurs.entity.ReturnValue;
+import com.cecurs.common.ReturnValue;
 import com.cecurs.enums.MessageType;
 import com.cecurs.service.FileInfoService;
 import com.cecurs.util.TcpClient;

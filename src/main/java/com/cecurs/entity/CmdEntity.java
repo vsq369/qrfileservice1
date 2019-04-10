@@ -3,9 +3,7 @@ package com.cecurs.entity;
 
 public class CmdEntity {
 
-
     private String version;
-
 
     private String dataBlock;
 

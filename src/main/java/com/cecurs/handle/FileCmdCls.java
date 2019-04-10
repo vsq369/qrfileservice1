@@ -2,7 +2,7 @@ package com.cecurs.handle;
 
 import com.cecurs.common.Tools;
 import com.cecurs.entity.CmdEntity;
-import com.cecurs.entity.ReturnValue;
+import com.cecurs.common.ReturnValue;
 import com.cecurs.enums.CmdResp;
 import com.cecurs.enums.MessageType;
 import com.cecurs.util.HashAlgorithms;

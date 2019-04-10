@@ -2,9 +2,12 @@ package com.cecurs.dao;
 
 import com.cecurs.entity.FileInfo;
 import com.cecurs.entity.FileInfoExample;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface FileInfoMapper {
     int countByExample(FileInfoExample example);
 
