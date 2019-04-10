@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  
+      <!DOCTYPE generatorConfiguration 
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+       
+      <generatorConfiguration>
+         <!--数据库驱动路径-->
+        <classPathEntry location="D:\I-world\cec\CloudCardMonitor\GZTMonitor\WebContent\WEB-INF\lib\mysql-connector-java-5.1.7-bin.jar" />
+      <context id="DB2Tables" targetRuntime="MyBatis3">
+       <commentGenerator>
+         <property name="suppressAllComments" value="true"/>
+       </commentGenerator>
+          <!--数据库链接url,用户名和密码-->
+       <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+             connectionURL="jdbc:mysql://123.126.109.179:43306/cloud_card"
+             userId="root" password="Cec@123456">
+         </jdbcConnection>
+       <javaTypeResolver>
+          <property name="forceBigDecimals" value="false"/>
+       </javaTypeResolver>
+       <!--域模型层,生成的目标包,项目目标源文件-->
+       <javaModelGenerator targetPackage="com.cecurs.cc.core.entity" targetProject="src/main/java">
+           <property name="enableSubPackages" value="true"/>
+           <property name="trimStrings" value="true"/>
+       </javaModelGenerator>
+        <!--XML映射文件,生成的位置（目标包）,源代码文件夹-->
+       <sqlMapGenerator targetPackage="sql" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+       </sqlMapGenerator>
+        <!--XML对应的Mapper类-->
+       <javaClientGenerator type="XMLMAPPER" targetPackage="com.cecurs.cc.core.dao" targetProject="src/main/java">
+         <property name="enableSubPackages" value="true"/>
+       </javaClientGenerator>
+
+       <!--下面是数据库表名和项目中需要生成类的名称，建议和数据库保持一致，如果有多个表，添加多个节点即可-->
+       <table  tableName="core_sys_channel" domainObjectName="CoreSysChannel" enableCountByExample="true" enableSelectByExample="true" enableUpdateByExample="true" enableDeleteByExample="true">
+          <columnOverride column="channel_id" property="channelId" jdbcType="BIGINT"></columnOverride>
+          <columnOverride column="channel_no" property="channelNo" javaType="String"></columnOverride>
+          <columnOverride column="channel_name" property="channelName" javaType="String"></columnOverride>
+          <columnOverride column="channel_type" property="channelType" javaType="int"></columnOverride>
+          <columnOverride column="channel_status" property="channelStatus" javaType="int"></columnOverride>
+          <columnOverride column="is_test" property="isTest" javaType="int"></columnOverride>
+          <columnOverride column="is_delete" property="isDelete" javaType="int"></columnOverride>
+          <columnOverride column="gmt_create" property="gmtCreate" javaType="String"></columnOverride>
+          <columnOverride column="creator" property="creator" javaType="String"></columnOverride>
+          <columnOverride column="gmt_modified" property="gmtModified" javaType="String"></columnOverride>
+          <columnOverride column="modifier" property="modifier" javaType="String"></columnOverride>
+       </table>
+     </context>
+       
+</generatorConfiguration>

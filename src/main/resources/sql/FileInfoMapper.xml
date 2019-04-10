@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cecurs.qrfileservice.dao.FileInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.cecurs.qrfileservice.entity.FileInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="file_size" property="fileSize" jdbcType="INTEGER" />
+    <result column="hash" property="hash" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="BIT" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="is_analysis" property="isAnalysis" jdbcType="BIT" />
+    <result column="analysis_time" property="analysisTime" jdbcType="TIMESTAMP" />
+    <result column="inn_code" property="innCode" jdbcType="VARCHAR" />
+    <result column="inn_name" property="innName" jdbcType="VARCHAR" />
+    <result column="create_time" property="modifier" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, file_name, file_size, hash, flag, status, path, is_analysis, analysis_time, inn_code, 
+    inn_name, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.cecurs.qrfileservice.entity.FileInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_fileinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Byte" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_fileinfo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte" >
+    delete from t_fileinfo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cecurs.qrfileservice.entity.FileInfoExample" >
+    delete from t_fileinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+    insert into t_fileinfo (id, file_name, file_size, 
+      hash, flag, status, path, 
+      is_analysis, analysis_time, inn_code, 
+      inn_name, create_time)
+    values (#{id,jdbcType=BIGINT}, #{fileName,jdbcType=VARCHAR}, #{fileSize,jdbcType=INTEGER}, 
+      #{hash,jdbcType=VARCHAR}, #{flag,jdbcType=TINYINT}, #{status,jdbcType=BIT}, #{path,jdbcType=VARCHAR}, 
+      #{isAnalysis,jdbcType=BIT}, #{analysisTime,jdbcType=TIMESTAMP}, #{innCode,jdbcType=VARCHAR}, 
+      #{innName,jdbcType=VARCHAR}, #{modifier,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+    insert into t_fileinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      file_size,
+      <if test="hash != null" >
+        hash,
+      </if>
+      flag,
+      status,
+      <if test="path != null" >
+        path,
+      </if>
+      is_analysis,
+      <if test="analysisTime != null" >
+        analysis_time,
+      </if>
+      <if test="innCode != null" >
+        inn_code,
+      </if>
+      <if test="innName != null" >
+        inn_name,
+      </if>
+      <if test="modifier != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      #{fileSize,jdbcType=INTEGER},
+      <if test="hash != null" >
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      #{flag,jdbcType=TINYINT},
+      #{status,jdbcType=BIT},
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      #{isAnalysis,jdbcType=BIT},
+      <if test="analysisTime != null" >
+        #{analysisTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="innCode != null" >
+        #{innCode,jdbcType=VARCHAR},
+      </if>
+      <if test="innName != null" >
+        #{innName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cecurs.qrfileservice.entity.FileInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_fileinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_fileinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.fileName != null" >
+        file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileSize != null" >
+        file_size = #{record.fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="record.hash != null" >
+        hash = #{record.hash,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flag != null" >
+        flag = #{record.flag,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.path != null" >
+        path = #{record.path,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isAnalysis != null" >
+        is_analysis = #{record.isAnalysis,jdbcType=BIT},
+      </if>
+      <if test="record.analysisTime != null" >
+        analysis_time = #{record.analysisTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.innCode != null" >
+        inn_code = #{record.innCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.innName != null" >
+        inn_name = #{record.innName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifier != null" >
+        create_time = #{record.modifier,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_fileinfo
+    set id = #{record.id,jdbcType=BIGINT},
+      file_name = #{record.fileName,jdbcType=VARCHAR},
+      file_size = #{record.fileSize,jdbcType=INTEGER},
+      hash = #{record.hash,jdbcType=VARCHAR},
+      flag = #{record.flag,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=BIT},
+      path = #{record.path,jdbcType=VARCHAR},
+      is_analysis = #{record.isAnalysis,jdbcType=BIT},
+      analysis_time = #{record.analysisTime,jdbcType=TIMESTAMP},
+      inn_code = #{record.innCode,jdbcType=VARCHAR},
+      inn_name = #{record.innName,jdbcType=VARCHAR},
+      create_time = #{record.modifier,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+    update t_fileinfo
+    <set >
+      <if test="fileName != null" >
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileSize != null" >
+        file_size = #{fileSize,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null" >
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="isAnalysis != null" >
+        is_analysis = #{isAnalysis,jdbcType=BIT},
+      </if>
+      <if test="analysisTime != null" >
+        analysis_time = #{analysisTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="innCode != null" >
+        inn_code = #{innCode,jdbcType=VARCHAR},
+      </if>
+      <if test="innName != null" >
+        inn_name = #{innName,jdbcType=VARCHAR},
+      </if>
+      <if test="modifier != null" >
+        create_time = #{modifier,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cecurs.qrfileservice.entity.FileInfo" >
+    update t_fileinfo
+    set file_name = #{fileName,jdbcType=VARCHAR},
+      file_size = #{fileSize,jdbcType=INTEGER},
+      hash = #{hash,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=TINYINT},
+      status = #{status,jdbcType=BIT},
+      path = #{path,jdbcType=VARCHAR},
+      is_analysis = #{isAnalysis,jdbcType=BIT},
+      analysis_time = #{analysisTime,jdbcType=TIMESTAMP},
+      inn_code = #{innCode,jdbcType=VARCHAR},
+      inn_name = #{innName,jdbcType=VARCHAR},
+      create_time = #{modifier,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
