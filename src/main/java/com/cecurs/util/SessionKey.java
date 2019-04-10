@@ -2,6 +2,8 @@ package com.cecurs.util;
 
 
 
+import com.cecurs.common.DESCipher;
+
 import java.io.UnsupportedEncodingException;
 
 
@@ -453,9 +455,7 @@ public class SessionKey {
 	/**
 	 * DES解密--->对称密钥 解密算法与加密算法基本相同，不同之处仅在于轮子密钥的使用顺序逆序，即解密的第1 轮子密钥为加密的6 轮子密钥，解密的
 	 * 轮子密钥为加密的5 轮子密钥，…， 解密的第16 轮子密钥为加密的 轮子密钥
-	 * 
-	 * @param source密文
-	 * @param key密钥
+	 *
 	 * @return
 	 * @throws Exception 
 	 */
@@ -712,10 +712,10 @@ public class SessionKey {
 	 * 计算MAC(hex) ANSI-X9.9-MAC(16的整数不补) PBOC-DES-MAC(16的整数补8000000000000000)
 	 * 使用单倍长密钥DES算法
 	 * 
-	 * @param key密钥
+	 *  key密钥
 	 *            (16byte)
-	 * @param vector初始向量0000000000000000
-	 * @param data数据
+	 * vector初始向量0000000000000000
+	 *  data数据
 	 * @return mac
 	 * @throws Exception 
 	 */
@@ -759,10 +759,10 @@ public class SessionKey {
 	 * 计算MAC(hex) PBOC_3DES_MAC(16的整数补8000000000000000) 前n-1组使用单长密钥DES
 	 * CBC算法（使用密钥是密钥的左8字节） 最后1组使用双长密钥3DES CBC算法（使用全部16字节密钥）
 	 * 
-	 * @param key密钥
+	 *  key密钥
 	 *            (32byte)
-	 * @param vector初始向量0000000000000000
-	 * @param data数据
+	 *  vector初始向量0000000000000000
+	 *  data数据
 	 * @return mac
 	 * @throws Exception 
 	 */
@@ -879,9 +879,9 @@ public class SessionKey {
 	/**
 	 * 主密钥需要经过两次分散获得IC卡中的子密钥 空圈的通讯类过程密钥使用这种密钥分散机制
 	 * 
-	 * @param issuerFlag发卡方标识符
-	 * @param appNo应用序列号即卡号
-	 * @param mpk主密钥
+	 *  issuerFlag发卡方标识符
+	 *  appNo应用序列号即卡号
+	 *  mpk主密钥
 	 * @return
 	 * @throws Exception 
 	 */
@@ -906,9 +906,9 @@ public class SessionKey {
 	/**
 	 * 主密钥需要经过一次分散获得的子密钥 空圈的交易类过程密钥使用这种密钥分散机制
 	 * 
-	 * @param issuerFlag发卡方标识符
-	 * @param appNo应用序列号即卡号
-	 * @param mpk主密钥
+	 *  issuerFlag发卡方标识符
+	 *  appNo应用序列号即卡号
+	 *  mpk主密钥
 	 * @return
 	 * @throws Exception 
 	 */
@@ -925,13 +925,13 @@ public class SessionKey {
 	/**
 	 * 采用x9.9算法计算MAC (Count MAC by ANSI-x9.9).
 	 * 
-	 * @param tKey
+	 *  tKey
 	 *            密钥数据
-	 * @param tBuffer
+	 *  tBuffer
 	 *            待计算的缓冲区
-	 * @param iOffset
+	 *  iOffset
 	 *            数据的偏移量(0,1,...，即起始位置)
-	 * @param iLength
+	 *  iLength
 	 *            数据的长度(<0 - 默认值，即整个长度)
 	 * @return MAC值(null -- 无效)
 	 */
