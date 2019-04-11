@@ -3,7 +3,6 @@ package com.cecurs.util;
 
 
 import com.cecurs.common.DESCipher;
-
 import java.io.UnsupportedEncodingException;
 
 
