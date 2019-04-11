@@ -17,6 +17,11 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
 
+
+/**
+ * @author  wangjc
+ * 下载工具类
+ */
 @Configuration
 @Component
 @Slf4j
@@ -31,6 +36,7 @@ public class DownFileSvr {
     @Resource
     private FileInfoService fileInfoService;
 
+    @Resource
     private FileCmdCls  fileCmdCls;
 
     /**

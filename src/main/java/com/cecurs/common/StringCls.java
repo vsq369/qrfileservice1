@@ -1,7 +1,10 @@
 package com.cecurs.common;
 
 import java.io.UnsupportedEncodingException;
-
+/**
+ * @author  wangjc
+ * 工具类
+ */
 public class StringCls {
 	
 	public static String StrToHex(String str,boolean mSpace){

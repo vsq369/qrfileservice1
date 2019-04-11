@@ -5,6 +5,10 @@ import com.cecurs.common.StringCls;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 拆分数据工具类
+ * @author wangjc
+ */
 public class MsgSplit {
 
 

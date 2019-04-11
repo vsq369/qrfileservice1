@@ -4,6 +4,10 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author  wangjc
+ * 工具类
+ */
 public class Tools {
 
     /**

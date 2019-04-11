@@ -2,7 +2,10 @@ package com.cecurs.common;
 
 
 import com.cecurs.util.SessionKey;
-
+/**
+ * @author  wangjc
+ * 工具类
+ */
 public class MacCls {
 
 	public static void main(String[] args) throws Exception {
