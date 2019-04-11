@@ -25,13 +25,13 @@ public class DownFileSvr {
     @Resource
     private FileInfoService fileInfoService;
 
+    @Resource
     private FileCmdCls  fileCmdCls;
 
     /**
      * 下载步骤 参考交通部文件传输规范
      * @return
      */
-
     public String downLoad(String inncode,String innName,String lsh){
         //请求文件下载
         ReturnValue cmd4002 =fileCmdCls.cmd4002Data(innName,inncode);
@@ -56,8 +56,6 @@ public class DownFileSvr {
         for(int i=0;i<files;i++){
             head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4008.getType(),MessageType.CMD4008.getLength());
             ReturnValue cmd4008 = fileCmdCls.cmd4008Data("00");
-
-
         }
 
         return "";

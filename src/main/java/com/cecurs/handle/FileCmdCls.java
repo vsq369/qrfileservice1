@@ -154,7 +154,6 @@ public class FileCmdCls {
      *  fileName 文件名  fileAstract 文件摘要 fileSize 文件大小
      * @return
      */
-
    public  Map<String,String> cmd4003Dcompose(String data){
        Map<String,String> map = new HashMap<>();
        map.put("cmd","4003");
@@ -377,7 +376,6 @@ public class FileCmdCls {
       }
       return returnValue;
   }
-
 
 
     public  String MAC(String Key,String data){

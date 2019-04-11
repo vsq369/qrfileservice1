@@ -285,7 +285,7 @@
         create_time = #{modifier,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where file_name = #{fileName,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.cecurs.entity.FileInfo" >
     update t_fileinfo

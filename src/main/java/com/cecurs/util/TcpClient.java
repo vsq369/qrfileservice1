@@ -1,8 +1,6 @@
 package com.cecurs.util;
 
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.io.DataInputStream;
@@ -14,15 +12,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 @Component
-@ConfigurationProperties(prefix="system.socket")
+//@ConfigurationProperties(prefix="system.socket")
 public class TcpClient {
 
 
-    @Value("${ip}")
-    private String ip;
+    //@Value("${ip}")
+    private String ip = "114.242.105.153";
 
-    @Value("${port}")
-    private int port;
+    //@Value("${port}")
+    private int port = 10011;
 
     private Socket m_socket=null;
     public TcpClient(){
@@ -33,12 +31,11 @@ public class TcpClient {
             m_socket.setSoTimeout(60000);
 
             m_socket.setTcpNoDelay(true);
-            m_socket.connect(new InetSocketAddress(InetAddress
-                    .getByName(ip), port), 60000);
+            m_socket.connect(new InetSocketAddress(InetAddress.getByName(ip), port), 60000);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+           e.printStackTrace();
         }
     }
 
