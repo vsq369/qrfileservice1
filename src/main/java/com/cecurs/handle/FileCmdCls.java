@@ -1,7 +1,11 @@
 package com.cecurs.handle;
 
 import com.cecurs.common.Tools;
-import com.cecurs.entity.*;
+import com.cecurs.entity.BodyEntity;
+import com.cecurs.entity.Cmd;
+import com.cecurs.entity.CmdEntity;
+import com.cecurs.common.ReturnValue;
+import com.cecurs.entity.HeadEntity;
 import com.cecurs.enums.CmdResp;
 import com.cecurs.enums.MessageType;
 import com.cecurs.util.HashAlgorithms;
@@ -33,7 +37,6 @@ public class FileCmdCls {
      * @return
      */
     public ReturnValue cmdHeadV1(String messageID, String messageType, int dataLen){
-
         StringBuffer sb = new StringBuffer();
         sb.append(Tools.leftopdata(""+(20+dataLen), 4, "0"));//包长度
         sb.append(messageID);//12位同步消息块
@@ -79,7 +82,6 @@ public class FileCmdCls {
      * instCode 请求机构代码
      */
     public  ReturnValue cmd4001Data(String instName, String instCode){
-
         StringBuffer sb = new StringBuffer();
         sb.append(MessageType.CMD4001.getVersion());//版本号 消息类型
         sb.append(MessageType.CMD4001.getType());//版本号 消息类型
@@ -113,7 +115,6 @@ public class FileCmdCls {
         sb.append(Tools.rightopdata("", 8, "0"));
         sb.append(Tools.rightopdata("", 256, "F"));
 
-
         ReturnValue returnValue = new ReturnValue();
         CmdEntity cmdEntity = new CmdEntity();
         cmdEntity.setDataBlock(sb.toString());
@@ -130,7 +131,6 @@ public class FileCmdCls {
      * @return
      */
     public  ReturnValue cmd4003Data(String filePath, String fileName){
-
         StringBuffer sb = new StringBuffer();
         sb.append(MessageType.CMD4003.getVersion());//版本号
         sb.append(MessageType.CMD4003.getType());//消息类型
@@ -152,52 +152,6 @@ public class FileCmdCls {
     }
 
 
-    /**
-     *
-     * @param data 待解析数据
-     *  fileName 文件名  fileAstract 文件摘要 fileSize 文件大小
-     * @return
-     */
-
-   public  ReturnValue cmd4003Dcompose(String data){
-
-       ReturnValue returnValue = new ReturnValue();
-       returnValue.setMessageType(MessageType.CMD4003.getType());
-       if(StringUtils.isEmpty(data)){
-           returnValue.setResult(CmdResp.DATANULL.getCode());
-           returnValue.setDesc(CmdResp.DATANULL.getDesc());
-           return returnValue;
-       }
-       String type = data.substring(20,24);
-      //解析如果以4007结尾则说明文件已经传完
-       if("4007".equals(type)){
-           returnValue.setResult(CmdResp.SUCCESS.getCode());
-           returnValue.setDesc(CmdResp.SUCCESS.getDesc());
-           returnValue.setMessageType(MessageType.CMD4007.getType());
-           return returnValue;
-       }
-       int len = data.length();
-       try{
-           returnValue.setResult(CmdResp.SUCCESS.getCode());
-           returnValue.setDesc(CmdResp.SUCCESS.getDesc());
-
-           String fileName =data.substring(len-256-16-10-256-50,len-256-16-10-256);//文件名
-           String fileAstract=data.substring(len-256-16-10-256, len-256-16-10);//文件摘要
-           String fileSize=data.substring(len-256-16-10,len-256-16);//文件大小
-
-           CmdEntity cmdEntity = new CmdEntity();
-           cmdEntity.setFileName(fileName);
-           cmdEntity.setFileAbstract(fileAstract);
-           cmdEntity.setFileSize(fileSize);
-           returnValue.setCmd(cmdEntity);
-
-       }catch (Exception e) {
-           returnValue.setResult(CmdResp.SYS_ERROR.getCode());
-           returnValue.setDesc(CmdResp.SYS_ERROR.getDesc());
-       }
-
-       return returnValue;
-   }
 
 
     /**
@@ -223,32 +177,6 @@ public class FileCmdCls {
         return returnValue;
     }
 
-    /**
-     *
-     * @param data 待解析数据
-     * @return
-     */
-   public Map<String,String> cmd4004DownloadData(String data){
-
-       Map<String,String> map = new HashMap<>();
-
-       int datalen = data.length();
-       //head
-       String len = data.substring(0,4);//文件长度
-       String messageID = data.substring(4,16);
-       String type = data.substring(16,18);//文件类型
-       //head
-       //文件体
-       String version = data.substring(18,20);
-       String msgType = data.substring(20, 24);
-       String lstflag = data.substring(24, 25);
-       String dataBlock = data.substring(25,datalen-16);
-       String MAC = data.substring(datalen-16);
-       map.put("result","00");
-       map.put("cmd","4004");
-       map.put("resultdata",version);
-      return map;
-   }
 
 
     /**

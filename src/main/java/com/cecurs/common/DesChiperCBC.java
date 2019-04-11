@@ -9,13 +9,9 @@ import javax.crypto.spec.IvParameterSpec;
 
 
 public class DesChiperCBC {
-
+	 private final static String DES = "DES";
 	
-	 
-	private final static String DES = "DES";   
-	
-	//加密模式
-	
+	 //加密模式
 	 private final static String DESPadding = "DES/CBC/NoPadding";
 	 
 	 /**

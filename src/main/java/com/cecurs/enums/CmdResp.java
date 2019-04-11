@@ -2,15 +2,12 @@ package com.cecurs.enums;
 
 public enum CmdResp {
 
-
-
     SUCCESS("0000","成功"),
 
     DATANULL("1000","数据为空"),
 
     SYS_ERROR("9999","系统异常")
     ;
-
 
     private String code;
     private String desc;

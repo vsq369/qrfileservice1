@@ -1,4 +1,6 @@
-package com.cecurs.entity;
+package com.cecurs.common;
+
+import com.cecurs.entity.CmdEntity;
 
 public class ReturnValue {
 
@@ -8,10 +10,9 @@ public class ReturnValue {
 
     private String messageType;
 
-   private String version;
+    private String version;
 
     private CmdEntity cmd;
-
 
     public String getDesc() {
         return desc;

@@ -5,10 +5,7 @@ import com.cecurs.util.SessionKey;
 
 public class MacCls {
 
-	
-	
 	public static void main(String[] args) throws Exception {
-		
 		String HexData = "fbfdac89699a3af277c5d0cd4d5a04eccbb1ae5a";
 		String hexKey = "FBC85599A45EA47BB7B3C28865293D21";
 		String vector= null;
@@ -18,17 +15,12 @@ public class MacCls {
 		System.out.println(mac);
 	}
 	
-	
-	
-	
-	
+
 	/**
 	 * CBC模式下的mac计算
 	 * @throws Exception 
 	 */
-	
 	public static String mac_CBC(String HexData,String hexKey,String vector) throws Exception{
-		
 		int len = HexData.length();
 		int arrLen = len / 16 + 1;
 		String[] D = new String[arrLen];

@@ -32,6 +32,7 @@ public class TcpClient {
             m_socket.setSendBufferSize(2*1024);
             m_socket.setReceiveBufferSize(1107);
             m_socket.setSoTimeout(60000);
+
             m_socket.setTcpNoDelay(true);
             m_socket.connect(new InetSocketAddress(InetAddress
                     .getByName(ip), port), 60000);

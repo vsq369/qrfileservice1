@@ -1,15 +1,13 @@
 package com.cecurs.handle;
 
+import com.cecurs.common.ReturnValue;
 import com.cecurs.entity.Cmd;
-import com.cecurs.entity.CmdEntity;
 import com.cecurs.entity.FileInfo;
-import com.cecurs.entity.ReturnValue;
 import com.cecurs.enums.CmdResp;
 import com.cecurs.enums.MessageType;
 import com.cecurs.service.FileInfoService;
 import com.cecurs.util.TcpClient;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import javax.annotation.Resource;
 
 @Configuration
 @Component
@@ -26,10 +25,10 @@ public class DownFileSvr {
     @Value("file.downFilePath")
     private String downFilePath;
 
-    @Autowired
+    @Resource
     private TcpClient tcpClient;
 
-    @Autowired
+    @Resource
     private FileInfoService fileInfoService;
 
     private FileCmdCls  fileCmdCls;
@@ -75,6 +74,7 @@ public class DownFileSvr {
             fileinfo.setHash(fileAbstract);
             fileinfo.setInnCode(inncode);
             fileinfo.setInnName(innName);
+            fileinfo.setFlag(1);
             fileInfoService.addFileInfo(fileinfo);
 
 
@@ -113,7 +113,9 @@ public class DownFileSvr {
                         if(cmd.getBodyEntity().getCmdEntity().getResp().equals("**TEOF**")){
                             System.out.println("下载完成"+fileName);
                             //更改状态
-                            fileInfoService.updateFileInfo();
+                            fileinfo.setStatus(1);
+                            fileInfoService.updateFileInfo(fileinfo);
+                            return CmdResp.SUCCESS.getCode();
                         }
                     }
                     continue;
@@ -144,7 +146,9 @@ public class DownFileSvr {
                             if(cmd.getBodyEntity().getCmdEntity().getResp().equals("**TEOF**")){
                                 System.out.println("下载完成"+fileName);
                                 //更改状态
-                                fileInfoService.updateFileInfo();
+                                fileinfo.setStatus(1);
+                                fileInfoService.updateFileInfo(fileinfo);
+
                             }
                         }
                         break;
@@ -162,20 +166,10 @@ public class DownFileSvr {
                 log.error(e.getMessage());
             }
 
-
-
-
-
-
-
-
         }
 
-
-
-
-        return "";
-
+        tcpClient.CloseLink();
+        return CmdResp.SUCCESS.getCode();
     }
 
 }

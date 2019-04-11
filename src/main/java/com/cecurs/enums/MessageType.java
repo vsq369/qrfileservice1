@@ -15,7 +15,6 @@ public enum MessageType {
     MAC("mac","01",16)
     ;
 
-
     private MessageType(String type,String version,int length){
       this.type = type;
       this.version = version;

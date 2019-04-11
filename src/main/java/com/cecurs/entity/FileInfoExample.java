@@ -40,20 +40,20 @@ public class FileInfoExample {
     }
 
     public Criteria or() {
-        Criteria criteria = createCriteriaInternal();
+        Criteria criteria = createCriteriaIntegerernal();
         oredCriteria.add(criteria);
         return criteria;
     }
 
     public Criteria createCriteria() {
-        Criteria criteria = createCriteriaInternal();
+        Criteria criteria = createCriteriaIntegerernal();
         if (oredCriteria.size() == 0) {
             oredCriteria.add(criteria);
         }
         return criteria;
     }
 
-    protected Criteria createCriteriaInternal() {
+    protected Criteria createCriteriaIntegerernal() {
         Criteria criteria = new Criteria();
         return criteria;
     }
@@ -245,32 +245,32 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeEqualTo(int value) {
+        public Criteria andFileSizeEqualTo(Integer value) {
             addCriterion("file_size =", value, "fileSize");
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeNotEqualTo(int value) {
+        public Criteria andFileSizeNotEqualTo(Integer value) {
             addCriterion("file_size <>", value, "fileSize");
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeGreaterThan(int value) {
+        public Criteria andFileSizeGreaterThan(Integer value) {
             addCriterion("file_size >", value, "fileSize");
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeGreaterThanOrEqualTo(int value) {
+        public Criteria andFileSizeGreaterThanOrEqualTo(Integer value) {
             addCriterion("file_size >=", value, "fileSize");
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeLessThan(int value) {
+        public Criteria andFileSizeLessThan(Integer value) {
             addCriterion("file_size <", value, "fileSize");
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeLessThanOrEqualTo(int value) {
+        public Criteria andFileSizeLessThanOrEqualTo(Integer value) {
             addCriterion("file_size <=", value, "fileSize");
             return (Criteria) this;
         }
@@ -285,12 +285,12 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeBetween(int value1, int value2) {
+        public Criteria andFileSizeBetween(Integer value1, Integer value2) {
             addCriterion("file_size between", value1, value2, "fileSize");
             return (Criteria) this;
         }
 
-        public Criteria andFileSizeNotBetween(int value1, int value2) {
+        public Criteria andFileSizeNotBetween(Integer value1, Integer value2) {
             addCriterion("file_size not between", value1, value2, "fileSize");
             return (Criteria) this;
         }
@@ -375,32 +375,32 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andFlagEqualTo(int value) {
+        public Criteria andFlagEqualTo(Integer value) {
             addCriterion("flag =", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagNotEqualTo(int value) {
+        public Criteria andFlagNotEqualTo(Integer value) {
             addCriterion("flag <>", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagGreaterThan(int value) {
+        public Criteria andFlagGreaterThan(Integer value) {
             addCriterion("flag >", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagGreaterThanOrEqualTo(int value) {
+        public Criteria andFlagGreaterThanOrEqualTo(Integer value) {
             addCriterion("flag >=", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagLessThan(int value) {
+        public Criteria andFlagLessThan(Integer value) {
             addCriterion("flag <", value, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagLessThanOrEqualTo(int value) {
+        public Criteria andFlagLessThanOrEqualTo(Integer value) {
             addCriterion("flag <=", value, "flag");
             return (Criteria) this;
         }
@@ -415,12 +415,12 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andFlagBetween(int value1, int value2) {
+        public Criteria andFlagBetween(Integer value1, Integer value2) {
             addCriterion("flag between", value1, value2, "flag");
             return (Criteria) this;
         }
 
-        public Criteria andFlagNotBetween(int value1, int value2) {
+        public Criteria andFlagNotBetween(Integer value1, Integer value2) {
             addCriterion("flag not between", value1, value2, "flag");
             return (Criteria) this;
         }
@@ -435,32 +435,32 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(int value) {
+        public Criteria andStatusEqualTo(Integer value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(int value) {
+        public Criteria andStatusNotEqualTo(Integer value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(int value) {
+        public Criteria andStatusGreaterThan(Integer value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(int value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(int value) {
+        public Criteria andStatusLessThan(Integer value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(int value) {
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
@@ -475,12 +475,12 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(int value1, int value2) {
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(int value1, int value2) {
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
@@ -565,32 +565,32 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisEqualTo(int value) {
+        public Criteria andIsAnalysisEqualTo(Integer value) {
             addCriterion("is_analysis =", value, "isAnalysis");
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisNotEqualTo(int value) {
+        public Criteria andIsAnalysisNotEqualTo(Integer value) {
             addCriterion("is_analysis <>", value, "isAnalysis");
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisGreaterThan(int value) {
+        public Criteria andIsAnalysisGreaterThan(Integer value) {
             addCriterion("is_analysis >", value, "isAnalysis");
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisGreaterThanOrEqualTo(int value) {
+        public Criteria andIsAnalysisGreaterThanOrEqualTo(Integer value) {
             addCriterion("is_analysis >=", value, "isAnalysis");
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisLessThan(int value) {
+        public Criteria andIsAnalysisLessThan(Integer value) {
             addCriterion("is_analysis <", value, "isAnalysis");
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisLessThanOrEqualTo(int value) {
+        public Criteria andIsAnalysisLessThanOrEqualTo(Integer value) {
             addCriterion("is_analysis <=", value, "isAnalysis");
             return (Criteria) this;
         }
@@ -605,12 +605,12 @@ public class FileInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisBetween(int value1, int value2) {
+        public Criteria andIsAnalysisBetween(Integer value1, Integer value2) {
             addCriterion("is_analysis between", value1, value2, "isAnalysis");
             return (Criteria) this;
         }
 
-        public Criteria andIsAnalysisNotBetween(int value1, int value2) {
+        public Criteria andIsAnalysisNotBetween(Integer value1, Integer value2) {
             addCriterion("is_analysis not between", value1, value2, "isAnalysis");
             return (Criteria) this;
         }

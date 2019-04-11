@@ -3,9 +3,7 @@ package com.cecurs.entity;
 
 public class CmdEntity {
 
-
     private String version;
-
 
     private String dataBlock;
 
@@ -46,7 +44,6 @@ public class CmdEntity {
     public void setVersion(String version) {
         this.version = version;
     }
-
 
     public String getDataBlock() {
         return dataBlock;
