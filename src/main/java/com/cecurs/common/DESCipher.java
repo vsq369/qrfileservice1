@@ -6,8 +6,10 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
 
-
-//DES閸旂姾袙鐎碉拷閺�顖涘瘮娑撳穱elphi娴溿倓绨�(鐎涙顑佹稉鑼椽閻線娓剁紒鐔剁娑撶TF-8)
+/**
+ * @author  wangjc
+ * 加密
+ */
 public class DESCipher {
 
 	/**  

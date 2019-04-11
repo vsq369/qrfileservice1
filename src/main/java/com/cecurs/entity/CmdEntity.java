@@ -21,6 +21,16 @@ public class CmdEntity {
 
     private String resp;
 
+    private int recvlen;
+
+    public int getRecvlen() {
+        return recvlen;
+    }
+
+    public void setRecvlen(int recvlen) {
+        this.recvlen = recvlen;
+    }
+
     public String getResp() {
         return resp;
     }

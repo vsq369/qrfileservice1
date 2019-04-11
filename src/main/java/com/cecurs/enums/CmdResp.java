@@ -4,6 +4,7 @@ public enum CmdResp {
 
     SUCCESS("0000","成功"),
 
+    FAIL("10003","上传失败"),
     DATANULL("1000","数据为空"),
 
     SYS_ERROR("9999","系统异常")

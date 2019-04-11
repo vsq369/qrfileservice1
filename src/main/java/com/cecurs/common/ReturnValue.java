@@ -1,7 +1,10 @@
 package com.cecurs.common;
 
 import com.cecurs.entity.CmdEntity;
-
+/**
+ * @author  wangjc
+ * 工具类
+ */
 public class ReturnValue {
 
     private String desc;

@@ -2,7 +2,10 @@ package com.cecurs.common;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Locale;
-
+/**
+ * @author  wangjc
+ * 工具类
+ */
 public class RSAUtil {
 
 	private static String hexits = "0123456789ABCDEF";

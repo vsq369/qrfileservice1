@@ -17,6 +17,11 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
 
+
+/**
+ * @author  wangjc
+ * 下载工具类
+ */
 @Configuration
 @Component
 @Slf4j
@@ -31,13 +36,15 @@ public class DownFileSvr {
     @Resource
     private FileInfoService fileInfoService;
 
+    @Resource
     private FileCmdCls  fileCmdCls;
 
     /**
      * 下载步骤 参考交通部文件传输规范
      * @return
      */
-    public String downLoad(String inncode,String innName,String lsh){
+    public int downLoad(String inncode,String innName,String lsh){
+        int downFileSize = 0;
         //请求文件下载
         ReturnValue cmd4002 =fileCmdCls.cmd4002Data(innName,inncode);
         ReturnValue head = fileCmdCls.cmdHeadV2(lsh, MessageType.CMD4002.getType(),MessageType.CMD4002.getLength());
@@ -51,8 +58,6 @@ public class DownFileSvr {
         int files = Integer.parseInt(ret4006.getBodyEntity().getCmdEntity().getFiles());
 
         log.info("解析4006；需要下载的文件个数"+files);
-        //初始文件大小
-        int downFileSize = 0;
         //下载文件
         for(int i=0;i<files;i++){
             head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4008.getType(),MessageType.CMD4008.getLength());
@@ -113,7 +118,6 @@ public class DownFileSvr {
                             //更改状态
                             fileinfo.setStatus(1);
                             fileInfoService.updateFileInfo(fileinfo);
-                            return CmdResp.SUCCESS.getCode();
                         }
                     }
                     continue;
@@ -164,10 +168,16 @@ public class DownFileSvr {
                 log.error(e.getMessage());
             }
 
+            if(i+1==files){
+                downFileSize = 0;
+            }else{
+                downFileSize = i+1;
+            }
+
         }
 
         tcpClient.CloseLink();
-        return CmdResp.SUCCESS.getCode();
+        return downFileSize;
     }
 
 }

@@ -10,7 +10,7 @@ import com.cecurs.enums.CmdResp;
 import com.cecurs.enums.MessageType;
 import com.cecurs.util.HashAlgorithms;
 import com.cecurs.util.MsgSplit;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.util.HashMap;
@@ -27,7 +27,7 @@ import java.util.Map;
  * 拼装协议数据
  */
 
-@Component
+@Service
 public class FileCmdCls {
 
     /**
@@ -328,6 +328,9 @@ public class FileCmdCls {
             cmdEntity.setFileName(msg.split(MsgSplit.FieldType.FIX,50).trim());
             cmdEntity.setFileAbstract(msg.split(MsgSplit.FieldType.FIX,256).trim());
             cmdEntity.setFileSize(msg.split(MsgSplit.FieldType.FIX,10).trim());
+        }else if(body.getMsgType().equals(MessageType.CMD4005.getType())){
+            cmdEntity.setRecvlen(Integer.parseInt(msg.split(MsgSplit.FieldType.FIX,10)));
+            cmdEntity.setResp(msg.split(MsgSplit.FieldType.FIX,2));
         }
         body.setCmdEntity(cmdEntity);
         cmd.setBodyEntity(body);
