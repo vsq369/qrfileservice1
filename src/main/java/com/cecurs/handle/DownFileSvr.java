@@ -118,6 +118,9 @@ public class DownFileSvr {
                         }
                     }
                     continue;
+                }else if("0".equals(lstflag)){
+                    print.print(cmd.getBodyEntity().getCmdEntity().getDataBlock());
+                    print.flush();
                 }
 
                 //如果不为1 则有后续报文，发送4008 获取4004 报文
