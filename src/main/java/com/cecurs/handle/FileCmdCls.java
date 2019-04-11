@@ -323,7 +323,7 @@ public class FileCmdCls {
             cmdEntity.setResp(msg.split(MsgSplit.FieldType.FIX,8));
         }else if(body.getMsgType().equals(MessageType.CMD4006.getType())){
             //文件个数
-            cmdEntity.setFiles(msg.split(MsgSplit.FieldType.FIX,6));
+            cmdEntity.setFiles(msg.split(MsgSplit.FieldType.FIX,4));
         }else if(body.getMsgType().equals(MessageType.CMD4003.getType())){
             cmdEntity.setFileName(msg.split(MsgSplit.FieldType.FIX,50).trim());
             cmdEntity.setFileAbstract(msg.split(MsgSplit.FieldType.FIX,256).trim());
