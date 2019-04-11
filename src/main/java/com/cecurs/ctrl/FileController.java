@@ -4,9 +4,11 @@ import com.cecurs.enums.ErrorNoEnum;
 import com.cecurs.entity.FileInfo;
 import com.cecurs.common.Result;
 import com.cecurs.service.FileInfoService;
+import com.cecurs.util.TcpClient;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @author: guowei
@@ -17,8 +19,10 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class FileController {
 
-    @Autowired
+    @Resource
     private FileInfoService fileInfoService;
+    @Resource
+    private TcpClient tcpClient;
 
     @RequestMapping("/addFile")
     public Result addFile(@RequestBody FileInfo info){
@@ -42,7 +46,7 @@ public class FileController {
     @RequestMapping("/downloadFile")
     public Result downloadFile(@RequestBody FileInfo info){
         log.info("下载文件接口！");
-        fileInfoService.downloadFileInfo(info);
+        fileInfoService.downloadFileInfo(info,tcpClient);
         log.info("文件下载成功！");
         Result result = new Result(ErrorNoEnum.SUCCESS);
         return result;

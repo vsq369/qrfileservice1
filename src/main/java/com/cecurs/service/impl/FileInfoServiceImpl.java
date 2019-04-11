@@ -5,6 +5,7 @@ import com.cecurs.entity.FileInfo;
 import com.cecurs.entity.FileInfoExample;
 import com.cecurs.handle.DownFileSvr;
 import com.cecurs.service.FileInfoService;
+import com.cecurs.util.TcpClient;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -37,10 +38,10 @@ public class FileInfoServiceImpl implements FileInfoService{
     }
 
     @Override
-    public boolean downloadFileInfo(FileInfo info) {
+    public boolean downloadFileInfo(FileInfo info,TcpClient tcpClient) {
         String lsh = UUID.randomUUID().toString().substring(0,12);
-        String code = downFileSvr.downLoad(info.getInnCode(),info.getInnName(),lsh);
-        return "0000".equals(code);
+        int code = downFileSvr.downLoad(tcpClient,info.getInnCode(),info.getInnName(),lsh);
+        return 0 == code;
     }
 
 }

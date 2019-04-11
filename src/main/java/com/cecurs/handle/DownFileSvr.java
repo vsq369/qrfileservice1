@@ -3,7 +3,6 @@ package com.cecurs.handle;
 import com.cecurs.common.ReturnValue;
 import com.cecurs.entity.Cmd;
 import com.cecurs.entity.FileInfo;
-import com.cecurs.enums.CmdResp;
 import com.cecurs.enums.MessageType;
 import com.cecurs.service.FileInfoService;
 import com.cecurs.util.TcpClient;
@@ -31,9 +30,6 @@ public class DownFileSvr {
     private String downFilePath;
 
     @Resource
-    private TcpClient tcpClient;
-
-    @Resource
     private FileInfoService fileInfoService;
 
     @Resource
@@ -43,7 +39,7 @@ public class DownFileSvr {
      * 下载步骤 参考交通部文件传输规范
      * @return
      */
-    public int downLoad(String inncode,String innName,String lsh){
+    public int downLoad(TcpClient tcpClient,String inncode,String innName,String lsh){
         int downFileSize = 0;
         //请求文件下载
         ReturnValue cmd4002 =fileCmdCls.cmd4002Data(innName,inncode);
@@ -74,6 +70,7 @@ public class DownFileSvr {
             String fileSize =  ret4003.getBodyEntity().getCmdEntity().getFileSize();
             FileInfo fileinfo = new FileInfo();
             fileinfo.setFileName(fileName);
+            fileinfo.setIsAnalysis(0);
             fileinfo.setFileSize(Integer.parseInt(fileSize));
             fileinfo.setHash(fileAbstract);
             fileinfo.setInnCode(inncode);
