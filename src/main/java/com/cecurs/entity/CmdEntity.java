@@ -35,7 +35,6 @@ public class CmdEntity {
         this.version = version;
     }
 
-
     public String getDataBlock() {
         return dataBlock;
     }

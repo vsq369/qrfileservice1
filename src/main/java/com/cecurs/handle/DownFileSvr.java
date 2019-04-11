@@ -5,10 +5,11 @@ import com.cecurs.enums.MessageType;
 import com.cecurs.service.FileInfoService;
 import com.cecurs.util.TcpClient;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 @Configuration
 @Component
@@ -18,10 +19,10 @@ public class DownFileSvr {
     @Value("file.downFilePath")
     private String downFilePath;
 
-    @Autowired
+    @Resource
     private TcpClient tcpClient;
 
-    @Autowired
+    @Resource
     private FileInfoService fileInfoService;
 
     private FileCmdCls  fileCmdCls;
@@ -58,9 +59,6 @@ public class DownFileSvr {
 
 
         }
-
-
-
 
         return "";
 

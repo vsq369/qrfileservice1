@@ -33,7 +33,6 @@ public class FileCmdCls {
      * @return
      */
     public ReturnValue cmdHeadV1(String messageID, String messageType, int dataLen){
-
         StringBuffer sb = new StringBuffer();
         sb.append(Tools.leftopdata(""+(20+dataLen), 4, "0"));//包长度
         sb.append(messageID);//12位同步消息块
@@ -79,7 +78,6 @@ public class FileCmdCls {
      * instCode 请求机构代码
      */
     public  ReturnValue cmd4001Data(String instName, String instCode){
-
         StringBuffer sb = new StringBuffer();
         sb.append(MessageType.CMD4001.getVersion());//版本号 消息类型
         sb.append(MessageType.CMD4001.getType());//版本号 消息类型
@@ -113,7 +111,6 @@ public class FileCmdCls {
         sb.append(Tools.rightopdata("", 8, "0"));
         sb.append(Tools.rightopdata("", 256, "F"));
 
-
         ReturnValue returnValue = new ReturnValue();
         CmdEntity cmdEntity = new CmdEntity();
         cmdEntity.setDataBlock(sb.toString());
@@ -130,7 +127,6 @@ public class FileCmdCls {
      * @return
      */
     public  ReturnValue cmd4003Data(String filePath, String fileName){
-
         StringBuffer sb = new StringBuffer();
         sb.append(MessageType.CMD4003.getVersion());//版本号
         sb.append(MessageType.CMD4003.getType());//消息类型
@@ -160,7 +156,6 @@ public class FileCmdCls {
      */
 
    public  Map<String,String> cmd4003Dcompose(String data){
-
        Map<String,String> map = new HashMap<>();
        map.put("cmd","4003");
        if(StringUtils.isEmpty(data)){
@@ -217,7 +212,6 @@ public class FileCmdCls {
      * @return
      */
    public Map<String,String> cmd4004DownloadData(String data){
-
        Map<String,String> map = new HashMap<>();
 
        int datalen = data.length();
@@ -335,7 +329,6 @@ public class FileCmdCls {
     /**
      * 解析4007
      */
-
     public ReturnValue cmd4007Decompose(String data){
         ReturnValue returnValue = new ReturnValue();
         if("**TEOF**".equals(data.substring(data.length()-16-8, data.length()-16))){
@@ -371,7 +364,6 @@ public class FileCmdCls {
      * @param  data 待解析数据
      */
   public ReturnValue cmd4008Dcompose(String data){
-
       String resp =data.substring(data.length()-18,data.length()-16);
       ReturnValue returnValue = new ReturnValue();
 

@@ -14,7 +14,6 @@ public class ReturnValue {
 
     private CmdEntity cmd;
 
-
     public String getDesc() {
         return desc;
     }

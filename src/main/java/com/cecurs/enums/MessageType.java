@@ -14,7 +14,6 @@ public enum MessageType {
     CMD4008("4008","01",8),
     ;
 
-
     private MessageType(String type,String version,int length){
       this.type = type;
       this.version = version;
