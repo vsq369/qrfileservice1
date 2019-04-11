@@ -21,6 +21,16 @@ public class CmdEntity {
 
     private String files;
 
+    private String resp;
+
+    public String getResp() {
+        return resp;
+    }
+
+    public void setResp(String resp) {
+        this.resp = resp;
+    }
+
     public String getFiles() {
         return files;
     }

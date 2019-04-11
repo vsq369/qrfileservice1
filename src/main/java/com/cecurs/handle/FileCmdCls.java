@@ -1,11 +1,11 @@
 package com.cecurs.handle;
 
 import com.cecurs.common.Tools;
-import com.cecurs.entity.CmdEntity;
-import com.cecurs.entity.ReturnValue;
+import com.cecurs.entity.*;
 import com.cecurs.enums.CmdResp;
 import com.cecurs.enums.MessageType;
 import com.cecurs.util.HashAlgorithms;
+import com.cecurs.util.MsgSplit;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -159,32 +159,44 @@ public class FileCmdCls {
      * @return
      */
 
-   public  Map<String,String> cmd4003Dcompose(String data){
+   public  ReturnValue cmd4003Dcompose(String data){
 
-       Map<String,String> map = new HashMap<>();
-       map.put("cmd","4003");
+       ReturnValue returnValue = new ReturnValue();
+       returnValue.setMessageType(MessageType.CMD4003.getType());
        if(StringUtils.isEmpty(data)){
-           map.put("result","01");
+           returnValue.setResult(CmdResp.DATANULL.getCode());
+           returnValue.setDesc(CmdResp.DATANULL.getDesc());
+           return returnValue;
        }
        String type = data.substring(20,24);
       //解析如果以4007结尾则说明文件已经传完
        if("4007".equals(type)){
-           map.put("result","00");
-           map.put("cmd","4007");
+           returnValue.setResult(CmdResp.SUCCESS.getCode());
+           returnValue.setDesc(CmdResp.SUCCESS.getDesc());
+           returnValue.setMessageType(MessageType.CMD4007.getType());
+           return returnValue;
        }
        int len = data.length();
        try{
+           returnValue.setResult(CmdResp.SUCCESS.getCode());
+           returnValue.setDesc(CmdResp.SUCCESS.getDesc());
+
            String fileName =data.substring(len-256-16-10-256-50,len-256-16-10-256);//文件名
            String fileAstract=data.substring(len-256-16-10-256, len-256-16-10);//文件摘要
            String fileSize=data.substring(len-256-16-10,len-256-16);//文件大小
-           map.put("fileName",fileName);
-           map.put("fileAstract",fileAstract);
-           map.put("fileSize",fileSize);
+
+           CmdEntity cmdEntity = new CmdEntity();
+           cmdEntity.setFileName(fileName);
+           cmdEntity.setFileAbstract(fileAstract);
+           cmdEntity.setFileSize(fileSize);
+           returnValue.setCmd(cmdEntity);
+
        }catch (Exception e) {
-           e.printStackTrace();
-           map.put("result","01");
+           returnValue.setResult(CmdResp.SYS_ERROR.getCode());
+           returnValue.setDesc(CmdResp.SYS_ERROR.getDesc());
        }
-       return map;
+
+       return returnValue;
    }
 
 
@@ -285,34 +297,6 @@ public class FileCmdCls {
         return returnValue;
     }
 
-
-    /**
-     * 解析4006
-     * @param data
-     * @return
-     */
-    public  ReturnValue cmd4006Decompose(String data){
-        ReturnValue returnValue = new ReturnValue();
-       if(StringUtils.isEmpty(data)){
-           returnValue.setResult(CmdResp.DATANULL.getCode());
-           returnValue.setDesc(CmdResp.DATANULL.getDesc());
-           return returnValue;
-       }
-        int len = data.length();
-        String retcode = data.substring(len-18,len-16);
-        if("00".equals(retcode)){
-            CmdEntity cmdEntity = new CmdEntity();
-            cmdEntity.setFiles(data.substring(len-22, len-18));
-            returnValue.setCmd(cmdEntity);
-            returnValue.setResult(CmdResp.SUCCESS.getCode());
-            returnValue.setDesc(CmdResp.SUCCESS.getDesc());
-        }else{
-            returnValue.setResult(retcode);
-            returnValue.setDesc("读取文件个数为0");
-        }
-        return returnValue;
-    }
-
     /**
      * 4007
      * @return
@@ -329,19 +313,6 @@ public class FileCmdCls {
         returnValue.setMessageType(MessageType.CMD4007.getType());
         returnValue.setResult(CmdResp.SUCCESS.getCode());
         returnValue.setDesc(CmdResp.SUCCESS.getDesc());
-        return returnValue;
-    }
-
-    /**
-     * 解析4007
-     */
-
-    public ReturnValue cmd4007Decompose(String data){
-        ReturnValue returnValue = new ReturnValue();
-        if("**TEOF**".equals(data.substring(data.length()-16-8, data.length()-16))){
-            returnValue.setResult(CmdResp.SUCCESS.getCode());
-            returnValue.setDesc(CmdResp.SUCCESS.getDesc());
-        }
         return returnValue;
     }
 
@@ -366,26 +337,6 @@ public class FileCmdCls {
         return returnValue;
     }
 
-    /**
-     *解析4008
-     * @param  data 待解析数据
-     */
-  public ReturnValue cmd4008Dcompose(String data){
-
-      String resp =data.substring(data.length()-18,data.length()-16);
-      ReturnValue returnValue = new ReturnValue();
-
-      returnValue.setMessageType(MessageType.CMD4008.getType());
-      if("00".equals(resp)){
-          returnValue.setResult(CmdResp.SUCCESS.getCode());
-          returnValue.setDesc(CmdResp.SUCCESS.getDesc());
-      }else{
-          returnValue.setResult(resp);
-          returnValue.setDesc("4008返回错误码");
-      }
-      return returnValue;
-  }
-
 
 
     public  String MAC(String Key,String data){
@@ -394,5 +345,68 @@ public class FileCmdCls {
         }
         return "0000000000000000";
     }
+
+    /**
+     * 解析连包数据
+     * @param result
+     * @return
+     */
+    public Cmd unPack4008And4004(String result){
+        MsgSplit msg = new MsgSplit(result);
+        String headLen = msg.split(MsgSplit.FieldType.FIX, 4);
+        int PackLen = Integer.parseInt(headLen);
+        String body = msg.split(MsgSplit.FieldType.FIX, PackLen);
+        Cmd cmd = unPackNormal(headLen+body);
+        if(cmd.getBodyEntity().getMsgType().equals("4008")){
+            if(!cmd.getBodyEntity().getCmdEntity().getResp().equals("00")){
+                return null;
+            }
+        }
+        body = result.substring(PackLen+4);
+        return unPackNormal(body);
+
+    }
+
+    /**
+     * 解析常规数据
+     * @param data
+     * @return
+     */
+    public Cmd unPackNormal(String data){
+        MsgSplit msg = new MsgSplit(data);
+        Cmd cmd = new Cmd();
+        HeadEntity head = new HeadEntity();
+        head.setPackageLen(msg.split(MsgSplit.FieldType.FIX, 4));
+        head.setLsh(msg.split(MsgSplit.FieldType.FIX, 12));
+        head.setCompressFlag(msg.split(MsgSplit.FieldType.FIX, 1));
+        head.setEncrypType(msg.split(MsgSplit.FieldType.FIX, 1));
+        cmd.setHeadEntity(head);
+        BodyEntity body = new BodyEntity();
+        body.setVersion(msg.split(MsgSplit.FieldType.FIX, 2));
+        body.setMsgType(msg.split(MsgSplit.FieldType.FIX, 4));
+        CmdEntity cmdEntity = new CmdEntity();
+        if(body.getMsgType().equals(MessageType.CMD4008.getType())){
+            cmdEntity.setResp(msg.split(MsgSplit.FieldType.FIX,2));
+        }else if(body.getMsgType().equals(MessageType.CMD4004.getType())){
+            //计算数据长度
+            int dataLen = data.length()-16-18;
+            cmdEntity.setLstflag(msg.split(MsgSplit.FieldType.FIX,1));
+            cmdEntity.setDataBlock(msg.split(MsgSplit.FieldType.FIX,dataLen));
+        }else if(body.getMsgType().equals(MessageType.CMD4007.getType())){
+            cmdEntity.setResp(msg.split(MsgSplit.FieldType.FIX,8));
+        }else if(body.getMsgType().equals(MessageType.CMD4006.getType())){
+            //文件个数
+            cmdEntity.setFiles(msg.split(MsgSplit.FieldType.FIX,6));
+        }else if(body.getMsgType().equals(MessageType.CMD4003.getType())){
+            cmdEntity.setFileName(msg.split(MsgSplit.FieldType.FIX,50).trim());
+            cmdEntity.setFileAbstract(msg.split(MsgSplit.FieldType.FIX,256).trim());
+            cmdEntity.setFileSize(msg.split(MsgSplit.FieldType.FIX,10).trim());
+        }
+        body.setCmdEntity(cmdEntity);
+        cmd.setBodyEntity(body);
+        cmd.setMac(data.substring(data.length()-16));
+        return cmd;
+    }
+
 
 }

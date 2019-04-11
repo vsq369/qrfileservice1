@@ -6,7 +6,7 @@ import com.cecurs.service.FileInfoService;
 public class FileInfoServiceImpl implements FileInfoService{
 
     @Override
-    public boolean addFileInfo() {
+    public boolean addFileInfo(FileInfo fileInfo) {
         return false;
     }
 
