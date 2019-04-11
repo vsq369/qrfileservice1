@@ -6,9 +6,7 @@ import com.cecurs.common.Result;
 import com.cecurs.service.FileInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: guowei
@@ -37,6 +35,15 @@ public class FileController {
         log.info("更新文件接口！");
         fileInfoService.updateFileInfo(info);
         log.info("文件更新成功！");
+        Result result = new Result(ErrorNoEnum.SUCCESS);
+        return result;
+    }
+
+    @RequestMapping("/downloadFile")
+    public Result downloadFile(@RequestBody FileInfo info){
+        log.info("下载文件接口！");
+        fileInfoService.downloadFileInfo(info);
+        log.info("文件下载成功！");
         Result result = new Result(ErrorNoEnum.SUCCESS);
         return result;
 

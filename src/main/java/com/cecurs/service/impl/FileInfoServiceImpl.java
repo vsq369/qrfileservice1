@@ -3,17 +3,21 @@ package com.cecurs.service.impl;
 import com.cecurs.dao.FileInfoMapper;
 import com.cecurs.entity.FileInfo;
 import com.cecurs.entity.FileInfoExample;
+import com.cecurs.handle.DownFileSvr;
 import com.cecurs.service.FileInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class FileInfoServiceImpl implements FileInfoService{
 
     @Resource
     private FileInfoMapper fileInfoMapper;
+    @Resource
+    private DownFileSvr downFileSvr;
 
     @Override
     public boolean addFileInfo(FileInfo info) {
@@ -31,4 +35,12 @@ public class FileInfoServiceImpl implements FileInfoService{
     public List<FileInfo> selFileInfo(FileInfoExample example) {
         return fileInfoMapper.selectByExample(example);
     }
+
+    @Override
+    public boolean downloadFileInfo(FileInfo info) {
+        String lsh = UUID.randomUUID().toString().substring(0,12);
+        String code = downFileSvr.downLoad(info.getInnCode(),info.getInnName(),lsh);
+        return "0000".equals(code);
+    }
+
 }

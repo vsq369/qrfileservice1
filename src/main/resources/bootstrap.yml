@@ -1,6 +1,3 @@
-# dev 采用本地配置， product采用配置中心
-# 目的：git管理配置文件，修改配置后及时提交
-
 
 spring:
   main:

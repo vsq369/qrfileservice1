@@ -37,7 +37,6 @@ public class DownFileSvr {
      * 下载步骤 参考交通部文件传输规范
      * @return
      */
-
     public String downLoad(String inncode,String innName,String lsh){
         //请求文件下载
         ReturnValue cmd4002 =fileCmdCls.cmd4002Data(innName,inncode);
@@ -76,7 +75,6 @@ public class DownFileSvr {
             fileinfo.setInnName(innName);
             fileinfo.setFlag(1);
             fileInfoService.addFileInfo(fileinfo);
-
 
             File file = new File(downFilePath+fileName.trim());
             FileWriter filewirte = null;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author: guowei
@@ -27,7 +28,7 @@ public class AnalysisFileTask {
      * 每天的凌晨2点解析文件
      */
     @Scheduled(cron="0 0 2 * * *")
-    public Result updateFile() {
+    public Result analysisFile() {
         log.info("---查询未解析完成的文件，进行解析---");
         Result result = new Result(ErrorNoEnum.SUCCESS);
         try{
@@ -46,5 +47,11 @@ public class AnalysisFileTask {
         }
         log.info("---未解析文件任务结束---");
         return result;
+    }
+
+
+    public static void main(String[]args){
+        String s = UUID.randomUUID().toString().substring(0,12);
+        System.out.print(s);
     }
 }

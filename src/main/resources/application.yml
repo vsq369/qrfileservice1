@@ -7,7 +7,7 @@ system:
         port: 10011
 
 file:
-     downFilePath: d:/Data/down
+     downFilePath: d:/Data/down/qrfileservice
 
 spring:
      application:
@@ -56,7 +56,7 @@ logging:
             apache:
                     ibatis: DEBUG
 
-log_path: d:/data/qrfileservice/logs
+log_path: d:/data/log/qrfileService
 
 
 

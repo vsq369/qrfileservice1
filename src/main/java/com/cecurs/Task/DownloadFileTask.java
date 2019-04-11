@@ -4,6 +4,7 @@ import com.cecurs.common.Result;
 import com.cecurs.entity.FileInfo;
 import com.cecurs.entity.FileInfoExample;
 import com.cecurs.enums.ErrorNoEnum;
+import com.cecurs.handle.DownFileSvr;
 import com.cecurs.service.FileInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,12 +23,14 @@ public class DownloadFileTask {
 
     @Resource
     private FileInfoService fileInfoService;
+    @Resource
+    private DownFileSvr downFileSvr;
 
     /**
      * 每天的凌晨1点下载文件
      */
     @Scheduled(cron="0 0 1 * * *")
-    public Result updateFile() {
+    public Result downloadFile() {
         log.info("---查询未下载完成的文件，进行下载---");
         Result result = new Result(ErrorNoEnum.SUCCESS);
         try{

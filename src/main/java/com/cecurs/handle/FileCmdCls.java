@@ -11,7 +11,6 @@ import com.cecurs.enums.MessageType;
 import com.cecurs.util.HashAlgorithms;
 import com.cecurs.util.MsgSplit;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.util.HashMap;
