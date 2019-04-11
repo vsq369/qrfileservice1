@@ -1,14 +1,19 @@
+server:
+    port: 8081
+
 system:
     socket:
         ip: 114.242.105.153
         port: 10011
-file:
-     downFilePath: d:/down
 
+file:
+     downFilePath: d:/Data/down
 
 spring:
+     application:
+         name: qrfileservice
      datasource:
-         url: jdbc:mysql://192.168.1.241:3306/qrfilemanage?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
+         url: jdbc:mysql://120.132.33.248:13565/qrfilemanage?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false
          username: root
          password: Cec@123456
          type: com.alibaba.druid.pool.DruidDataSource
@@ -40,6 +45,18 @@ spring:
          removeAbandoned: true
          # 300秒，也就是5分钟
          removeAbandonedTimeout: 300
+
+
+logging:
+   level:
+         root: INFO
+         org:
+            springframework:
+                    web: DEBUG
+            apache:
+                    ibatis: DEBUG
+
+log_path: d:/data/qrfileservice/logs
 
 
 
