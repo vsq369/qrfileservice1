@@ -316,7 +316,7 @@ public class FileCmdCls {
             cmdEntity.setResp(msg.split(MsgSplit.FieldType.FIX,2));
         }else if(body.getMsgType().equals(MessageType.CMD4004.getType())){
             //计算数据长度
-            int dataLen = data.length()-16-18;
+            int dataLen = data.length()-16-25;
             cmdEntity.setLstflag(msg.split(MsgSplit.FieldType.FIX,1));
             cmdEntity.setDataBlock(msg.split(MsgSplit.FieldType.FIX,dataLen));
         }else if(body.getMsgType().equals(MessageType.CMD4007.getType())){

@@ -21,8 +21,6 @@ public class FileController {
 
     @Resource
     private FileInfoService fileInfoService;
-    @Resource
-    private TcpClient tcpClient;
 
     @RequestMapping("/addFile")
     public Result addFile(@RequestBody FileInfo info){
@@ -45,6 +43,7 @@ public class FileController {
 
     @RequestMapping("/downloadFile")
     public Result downloadFile(@RequestBody FileInfo info){
+        TcpClient tcpClient = new TcpClient();
         log.info("下载文件接口！");
         fileInfoService.downloadFileInfo(info,tcpClient);
         log.info("文件下载成功！");

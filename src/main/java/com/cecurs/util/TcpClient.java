@@ -1,6 +1,7 @@
 package com.cecurs.util;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.DataInputStream;
@@ -13,6 +14,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 @Component
+@Slf4j
 //@ConfigurationProperties(prefix="system.socket")
 public class TcpClient {
 
@@ -53,7 +55,12 @@ public class TcpClient {
 
 
     public boolean sendText(String txt){
-        return sendMsg(txt.getBytes());
+        try{
+            return sendMsg(txt.getBytes());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+       return false;
     }
 
     public byte[] receiveMsg(){
@@ -95,11 +102,25 @@ public class TcpClient {
         sendText(sendData);
         byte[] packLenByte = new byte[4];
         ReceiveMsgStr(packLenByte);
-        sb.append(new String(packLenByte) );
-        int pLen = Integer.parseInt(new String(packLenByte));
+        try {
+            sb.append(new String(packLenByte,"ISO8859-1") );
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        int pLen = 0;
+        try {
+            pLen = Integer.parseInt(new String(packLenByte,"ISO8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         byte[] body= new byte[pLen];
         ReceiveMsgStr(body);
-        sb.append(new String(body));
+        try {
+            sb.append(new String(body,"ISO8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return sb.toString();
     }
 
@@ -114,11 +135,19 @@ public class TcpClient {
         //接收4008
         byte[] packLenByte = new byte[4];
         ReceiveMsgStr(packLenByte);
-        sb.append(new String(packLenByte) );
+        try {
+            sb.append(new String(packLenByte,"ISO8859-1") );
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         int pLen = Integer.parseInt(new String(packLenByte));
         byte[] body= new byte[pLen];
         ReceiveMsgStr(body);
-        sb.append(new String(body));
+        try {
+            sb.append(new String(body,"ISO8859-1"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         MsgSplit msg = new MsgSplit(sb.toString());
         msg.split(MsgSplit.FieldType.FIX,4);
@@ -131,18 +160,29 @@ public class TcpClient {
         String resp =  msg.split(MsgSplit.FieldType.FIX,2);//type
         if(msgType.equals("4008")){
             if("00".equals(resp)){
+
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 //接收4004
                 packLenByte = new byte[4];
                 ReceiveMsgStr(packLenByte);
-                sb.append(new String(packLenByte) );
+                try {
+                    sb.append(new String(packLenByte,"ISO8859-1") );
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 pLen = Integer.parseInt(new String(packLenByte));
                 body= new byte[pLen];
                 ReceiveMsgStr(body);
                 try {
-                    sb.append(new String(body,"GB2312"));
+                    sb.append(new String(body,"ISO8859-1"));
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
+
                 return sb.toString();
             }else {
                 return "false";

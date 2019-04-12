@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import javax.annotation.Resource;
@@ -26,7 +27,7 @@ import javax.annotation.Resource;
 @Slf4j
 public class DownFileSvr {
 
-    @Value("file.downFilePath")
+    @Value("d:/jt/")
     private String downFilePath;
 
     @Resource
@@ -77,36 +78,38 @@ public class DownFileSvr {
             fileinfo.setInnName(innName);
             fileinfo.setFlag(1);
             fileInfoService.addFileInfo(fileinfo);
-
-            File file = new File(downFilePath+fileName.trim());
-            FileWriter filewirte = null;
+            log.info("文件名"+fileName);
+            File file = new File(downFilePath+""+inncode+"/");
+            file.mkdirs();
+            file = new File(downFilePath+""+inncode+"/"+fileName.trim());
+            FileOutputStream fos = null;
             try {
-                filewirte = new FileWriter(file);
-                PrintWriter print = new PrintWriter(filewirte);
+                fos = new FileOutputStream(file);
                 //已经接收的文件大小
                 long resloveLen =0;
                 head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4005.getType(),MessageType.CMD4005.getLength());
                 ReturnValue cmd4005 = fileCmdCls.cmd4005Data(String.valueOf(resloveLen),"00");
                 sendCmd  = head.getCmd().getDataBlock()+cmd4005.getCmd().getDataBlock()+fileCmdCls.MAC("","");
                 log.info("发送4005报文"+sendCmd);
-               String txt4004And4008 = tcpClient.send4005(sendCmd);
-               if("false".equals(txt4004And4008)){
-                   continue;
-               }
+                String txt4004And4008 = tcpClient.send4005(sendCmd);
+                log.info("发送4005报文"+txt4004And4008);
+                if("false".equals(txt4004And4008)){
+                    continue;
+                }
 
-               Cmd cmd = fileCmdCls.unPack4008And4004(txt4004And4008);
+                Cmd cmd = fileCmdCls.unPack4008And4004(txt4004And4008);
 
-               String lstflag = cmd.getBodyEntity().getCmdEntity().getLstflag();
+                String lstflag = cmd.getBodyEntity().getCmdEntity().getLstflag();
                 if("1".equals(lstflag)){
-                    print.print(cmd.getBodyEntity().getCmdEntity().getDataBlock());
-                    print.flush();
+                    fos.write(cmd.getBodyEntity().getCmdEntity().getDataBlock().getBytes("ISO8859-1"));
+                    fos.flush();
                     //如果文件已经传输完毕，则发送4008报文
                     head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4008.getType(),MessageType.CMD4008.getLength());
                     cmd4008 = fileCmdCls.cmd4008Data("00");
                     sendCmd = head.getCmd().getDataBlock()+cmd4008.getCmd().getDataBlock()+fileCmdCls.MAC("","");
-                    log.info("发送4008报文"+sendCmd);
+                    log.info("3发送4008报文"+sendCmd);
                     String ret = tcpClient.sendNormal(sendCmd);
-                    log.info("4008返回报文"+sendCmd);
+                    log.info("4008返回报文"+ret);
                     cmd =  fileCmdCls.unPackNormal(ret);
 
                     if(cmd.getBodyEntity().getMsgType().equals(MessageType.CMD4007.getType())){
@@ -119,8 +122,8 @@ public class DownFileSvr {
                     }
                     continue;
                 }else if("0".equals(lstflag)){
-                    print.print(cmd.getBodyEntity().getCmdEntity().getDataBlock());
-                    print.flush();
+                    fos.write(cmd.getBodyEntity().getCmdEntity().getDataBlock().getBytes("ISO8859-1"));
+                    fos.flush();
                 }
 
                 //如果不为1 则有后续报文，发送4008 获取4004 报文
@@ -128,20 +131,34 @@ public class DownFileSvr {
                     head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4008.getType(),MessageType.CMD4008.getLength());
                     cmd4008 = fileCmdCls.cmd4008Data("00");
                     sendCmd = head.getCmd().getDataBlock()+cmd4008.getCmd().getDataBlock()+fileCmdCls.MAC("","");
-                    log.info("发送4008报文"+sendCmd);
-                    String ret = tcpClient.sendNormal(sendCmd);
+                    log.info("2发送4008报文"+sendCmd);
+                    //  String ret =  tcpClient.sendNormal(sendCmd);
+                    tcpClient.sendText(sendCmd);
+                    String ret = new String(tcpClient.receiveMsg(),"ISO8859-1");
+
+                    log.info("true返回4008报文"+ret);
                     cmd = fileCmdCls.unPackNormal(ret);
+
+                    if(cmd.getBodyEntity().getMsgType().equals(MessageType.CMD4007.getType())){
+                        if(cmd.getBodyEntity().getCmdEntity().getResp().equals("**TEOF**")){
+                            System.out.println("下载完成"+fileName);
+                            //更改状态
+                            fileinfo.setStatus(1);
+                            fileInfoService.updateFileInfo(fileinfo);
+                        }
+                        break;
+                    }
 
                     lstflag = cmd.getBodyEntity().getCmdEntity().getLstflag();
                     if("1".equals(lstflag)){
-                        print.print(cmd.getBodyEntity().getCmdEntity().getDataBlock());
-                        print.flush();
+                        fos.write(cmd.getBodyEntity().getCmdEntity().getDataBlock().getBytes("ISO8859-1"));
+                        fos.flush();
                         head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4008.getType(),MessageType.CMD4008.getLength());
                         cmd4008 = fileCmdCls.cmd4008Data("00");
                         sendCmd = head.getCmd().getDataBlock()+cmd4008.getCmd().getDataBlock()+fileCmdCls.MAC("","");
                         log.info("发送4008报文"+sendCmd);
                         ret = tcpClient.sendNormal(sendCmd);
-                        log.info("4008返回报文"+sendCmd);
+                        log.info("4008返回报文"+ret);
                         cmd =  fileCmdCls.unPackNormal(ret);
 
                         if(cmd.getBodyEntity().getMsgType().equals(MessageType.CMD4007.getType())){
@@ -150,22 +167,22 @@ public class DownFileSvr {
                                 //更改状态
                                 fileinfo.setStatus(1);
                                 fileInfoService.updateFileInfo(fileinfo);
-
+                                break;
                             }
                         }
-                        break;
+
                     }else if("0".equals(lstflag)){
-                        print.print(cmd.getBodyEntity().getCmdEntity().getDataBlock());
-                        print.flush();
+                        fos.write(cmd.getBodyEntity().getCmdEntity().getDataBlock().getBytes("ISO8859-1"));
+                        fos.flush();
                     }
 
                 }
 
-                print.close();
-                filewirte.close();
+                fos.close();
 
             }catch(Exception e){
                 log.error(e.getMessage());
+                break;
             }
 
             if(i+1==files){
@@ -175,6 +192,12 @@ public class DownFileSvr {
             }
 
         }
+        //所有文件发送完成
+
+        head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4008.getType(),MessageType.CMD4008.getLength());
+        ReturnValue cmd4008 = fileCmdCls.cmd4008Data("00");
+        sendCmd = head.getCmd().getDataBlock()+cmd4008.getCmd().getDataBlock()+fileCmdCls.MAC("","");
+        tcpClient.sendText(sendCmd);
 
         tcpClient.CloseLink();
         return downFileSize;
