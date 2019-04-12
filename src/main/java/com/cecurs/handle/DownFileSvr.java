@@ -107,14 +107,14 @@ public class DownFileSvr {
                     head = fileCmdCls.cmdHeadV2(lsh,MessageType.CMD4008.getType(),MessageType.CMD4008.getLength());
                     cmd4008 = fileCmdCls.cmd4008Data("00");
                     sendCmd = head.getCmd().getDataBlock()+cmd4008.getCmd().getDataBlock()+fileCmdCls.MAC("","");
-                    log.info("3发送4008报文"+sendCmd);
+                    log.info("发送4008报文"+sendCmd);
                     String ret = tcpClient.sendNormal(sendCmd);
                     log.info("4008返回报文"+ret);
                     cmd =  fileCmdCls.unPackNormal(ret);
 
                     if(cmd.getBodyEntity().getMsgType().equals(MessageType.CMD4007.getType())){
                         if(cmd.getBodyEntity().getCmdEntity().getResp().equals("**TEOF**")){
-                            System.out.println("下载完成"+fileName);
+                            log.info("下载完成"+fileName);
                             //更改状态
                             fileinfo.setStatus(1);
                             fileInfoService.updateFileInfo(fileinfo);
@@ -141,7 +141,7 @@ public class DownFileSvr {
 
                     if(cmd.getBodyEntity().getMsgType().equals(MessageType.CMD4007.getType())){
                         if(cmd.getBodyEntity().getCmdEntity().getResp().equals("**TEOF**")){
-                            System.out.println("下载完成"+fileName);
+                            log.info("下载完成"+fileName);
                             //更改状态
                             fileinfo.setStatus(1);
                             fileInfoService.updateFileInfo(fileinfo);
@@ -163,7 +163,7 @@ public class DownFileSvr {
 
                         if(cmd.getBodyEntity().getMsgType().equals(MessageType.CMD4007.getType())){
                             if(cmd.getBodyEntity().getCmdEntity().getResp().equals("**TEOF**")){
-                                System.out.println("下载完成"+fileName);
+                                log.info("下载完成"+fileName);
                                 //更改状态
                                 fileinfo.setStatus(1);
                                 fileInfoService.updateFileInfo(fileinfo);
